@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Rezervasyonlar - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-ticket-alt"></i> Rezervasyonlar
+</h1>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <a href="{{ url_for('rezervasyon_ekle') }}" class="btn btn-success">
+            <i class="fas fa-plus"></i> Yeni Rezervasyon
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-list"></i> Tüm Rezervasyonlar
+    </div>
+    <div class="card-body">
+        {% if rezervasyonlar %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>PNR Kodu</th>
+                        <th>Yolcu Adı</th>
+                        <th>Telefon</th>
+                        <th>Uçuş No</th>
+                        <th>Tarih</th>
+                        <th>Güzergah</th>
+                        <th>Koltuk</th>
+                        <th>Sınıf</th>
+                        <th>Fiyat</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rez in rezervasyonlar %}
+                    <tr>
+                        <td><strong>{{ rez[0] }}</strong></td>
+                        <td>{{ rez[1] }}</td>
+                        <td>{{ rez[2] }}</td>
+                        <td>{{ rez[3] }}</td>
+                        <td>{{ rez[4].strftime('%d.%m.%Y') if rez[4] else '-' }}</td>
+                        <td>{{ rez[5] }} → {{ rez[6] }}</td>
+                        <td>{{ rez[7] }}</td>
+                        <td>
+                            {% if rez[8] == 'Business' %}
+                                <span class="badge bg-warning text-dark">{{ rez[8] }}</span>
+                            {% elif rez[8] == 'First Class' %}
+                                <span class="badge bg-dark">{{ rez[8] }}</span>
+                            {% else %}
+                                <span class="badge bg-info">{{ rez[8] }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ "%.2f"|format(rez[9]) }} ₺</td>
+                        <td>
+                            {% if rez[10] == 'Aktif' %}
+                                <span class="badge bg-success">{{ rez[10] }}</span>
+                            {% elif rez[10] == 'İptal' %}
+                                <span class="badge bg-danger">{{ rez[10] }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ rez[10] }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info mb-0">
+            <i class="fas fa-info-circle"></i> Henüz rezervasyon kaydı bulunmamaktadır.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

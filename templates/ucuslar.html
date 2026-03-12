@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Uçuşlar - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-plane-departure"></i> Uçuşlar
+</h1>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <a href="{{ url_for('ucus_ekle') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Yeni Uçuş Ekle
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-list"></i> Tüm Uçuşlar
+    </div>
+    <div class="card-body">
+        {% if ucuslar %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Uçuş No</th>
+                        <th>Tarih</th>
+                        <th>Kalkış</th>
+                        <th>Varış</th>
+                        <th>Kalkış Saati</th>
+                        <th>Varış Saati</th>
+                        <th>Uçak</th>
+                        <th>Kapasite</th>
+                        <th>Dolu</th>
+                        <th>Fiyat</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ucus in ucuslar %}
+                    <tr>
+                        <td><strong>{{ ucus[0] }}</strong></td>
+                        <td>{{ ucus[1] if ucus[1] else '-' }}</td>
+                        <td>{{ ucus[5] }}</td>
+                        <td>{{ ucus[7] }}</td>
+                        <td>{{ ucus[2] }}</td>
+                        <td>{{ ucus[3] }}</td>
+                        <td>{{ ucus[9] }}</td>
+                        <td>{{ ucus[10] }}</td>
+                        <td>{{ ucus[11] }}</td>
+                        <td>{{ "%.2f"|format(ucus[12]) }} ₺</td>
+                        <td>
+                            {% if ucus[13] == 'Planlandı' %}
+                                <span class="badge bg-primary">{{ ucus[13] }}</span>
+                            {% elif ucus[13] == 'Gerçekleşti' %}
+                                <span class="badge bg-success">{{ ucus[13] }}</span>
+                            {% elif ucus[13] == 'İptal' %}
+                                <span class="badge bg-danger">{{ ucus[13] }}</span>
+                            {% elif ucus[13] == 'Gecikti' %}
+                                <span class="badge bg-warning">{{ ucus[13] }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ ucus[13] }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info mb-0">
+            <i class="fas fa-info-circle"></i> Henüz uçuş kaydı bulunmamaktadır.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

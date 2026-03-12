@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}Raporlar - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-chart-bar"></i> Raporlar ve İstatistikler
+</h1>
+
+<!-- En Popüler Havalimanları -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-building"></i> En Çok Kullanılan Havalimanları
+            </div>
+            <div class="card-body">
+                {% if populer_havaalanlari %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Havalimanı</th>
+                                <th>Şehir</th>
+                                <th>Uçuş Sayısı</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for h in populer_havaalanlari %}
+                            <tr>
+                                <td><strong>{{ loop.index }}</strong></td>
+                                <td>{{ h[0] }}</td>
+                                <td>{{ h[1] }}</td>
+                                <td><span class="badge bg-primary">{{ h[2] }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info mb-0">
+                    <i class="fas fa-info-circle"></i> Veri bulunmamaktadır.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- En Çok Uçuş Yapan Uçaklar -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-plane"></i> En Çok Uçuş Yapan Uçaklar
+            </div>
+            <div class="card-body">
+                {% if en_cok_ucus_yapan %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Uçak Kodu</th>
+                                <th>Model</th>
+                                <th>Uçuş Sayısı</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for u in en_cok_ucus_yapan %}
+                            <tr>
+                                <td><strong>{{ loop.index }}</strong></td>
+                                <td>{{ u[0] }}</td>
+                                <td>{{ u[1] }}</td>
+                                <td><span class="badge bg-success">{{ u[2] }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info mb-0">
+                    <i class="fas fa-info-circle"></i> Veri bulunmamaktadır.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Aylık Gelir Raporu -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-money-bill-wave"></i> Aylık Gelir Raporu
+            </div>
+            <div class="card-body">
+                {% if aylik_gelir %}
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Yıl</th>
+                                <th>Ay</th>
+                                <th>Rezervasyon Sayısı</th>
+                                <th>Toplam Gelir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for gelir in aylik_gelir %}
+                            <tr>
+                                <td><strong>{{ gelir[0] }}</strong></td>
+                                <td>
+                                    {% set aylar = {1: 'Ocak', 2: 'Şubat', 3: 'Mart', 4: 'Nisan', 
+                                                  5: 'Mayıs', 6: 'Haziran', 7: 'Temmuz', 8: 'Ağustos',
+                                                  9: 'Eylül', 10: 'Ekim', 11: 'Kasım', 12: 'Aralık'} %}
+                                    {{ aylar[gelir[1]] }}
+                                </td>
+                                <td>{{ gelir[2] }}</td>
+                                <td><strong>{{ "%.2f"|format(gelir[3]) }} ₺</strong></td>
+                            </tr>
+                            {% endfor %}
+                            <tr class="table-info">
+                                <td colspan="2"><strong>TOPLAM</strong></td>
+                                <td><strong>{{ aylik_gelir|sum(attribute=2) }}</strong></td>
+                                <td><strong>{{ "%.2f"|format(aylik_gelir|sum(attribute=3)) }} ₺</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-info mb-0">
+                    <i class="fas fa-info-circle"></i> Henüz gelir verisi bulunmamaktadır.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Yeni Yolcu Ekle - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-user-plus"></i> Yeni Yolcu Ekle
+</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-user"></i> Yolcu Bilgileri
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('yolcu_ekle') }}">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="yolcu_numarasi" class="form-label">Yolcu Numarası *</label>
+                            <input type="text" class="form-control" id="yolcu_numarasi" 
+                                   name="yolcu_numarasi" required placeholder="Örn: Y011">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="ad" class="form-label">Ad *</label>
+                            <input type="text" class="form-control" id="ad" 
+                                   name="ad" required placeholder="Ad">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="soyad" class="form-label">Soyad *</label>
+                            <input type="text" class="form-control" id="soyad" 
+                                   name="soyad" required placeholder="Soyad">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="tc_kimlik" class="form-label">TC Kimlik No</label>
+                            <input type="text" class="form-control" id="tc_kimlik" 
+                                   name="tc_kimlik" maxlength="11" placeholder="12345678901">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="dogum_tarihi" class="form-label">Doğum Tarihi</label>
+                            <input type="date" class="form-control" id="dogum_tarihi" 
+                                   name="dogum_tarihi">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="telefon_cep" class="form-label">Cep Telefonu *</label>
+                            <input type="tel" class="form-control" id="telefon_cep" 
+                                   name="telefon_cep" required placeholder="05551234567">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="telefon_ev" class="form-label">Ev Telefonu</label>
+                            <input type="tel" class="form-control" id="telefon_ev" 
+                                   name="telefon_ev" placeholder="02121234567">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="telefon_is" class="form-label">İş Telefonu</label>
+                            <input type="tel" class="form-control" id="telefon_is" 
+                                   name="telefon_is" placeholder="02129876543">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" 
+                               name="email" placeholder="ornek@email.com">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="adres" class="form-label">Adres</label>
+                        <textarea class="form-control" id="adres" name="adres" 
+                                  rows="3" placeholder="Tam adres"></textarea>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{{ url_for('yolcular') }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> İptal
+                        </a>
+                        <button type="submit" class="btn btn-info">
+                            <i class="fas fa-save"></i> Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Yolcular - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-users"></i> Yolcular
+</h1>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <a href="{{ url_for('yolcu_ekle') }}" class="btn btn-info">
+            <i class="fas fa-user-plus"></i> Yeni Yolcu Ekle
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-list"></i> Tüm Yolcular
+    </div>
+    <div class="card-body">
+        {% if yolcular %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Yolcu No</th>
+                        <th>Ad Soyad</th>
+                        <th>TC Kimlik</th>
+                        <th>Telefon (Cep)</th>
+                        <th>Email</th>
+                        <th>Adres</th>
+                        <th>Kayıt Tarihi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for yolcu in yolcular %}
+                    <tr>
+                        <td><strong>{{ yolcu[1] }}</strong></td>
+                        <td>{{ yolcu[2] }} {{ yolcu[3] }}</td>
+                        <td>{{ yolcu[9] or '-' }}</td>
+                        <td>{{ yolcu[6] }}</td>
+                        <td>{{ yolcu[7] or '-' }}</td>
+                        <td>{{ yolcu[8][:50] if yolcu[8] else '-' }}</td>
+                        <td>{{ yolcu[11].strftime('%d.%m.%Y') if yolcu[11] else '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info mb-0">
+            <i class="fas fa-info-circle"></i> Henüz yolcu kaydı bulunmamaktadır.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

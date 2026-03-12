@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Yeni Uçuş Ekle - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-plus-circle"></i> Yeni Uçuş Ekle
+</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-plane-departure"></i> Uçuş Bilgileri
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('ucus_ekle') }}">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="ucus_numarasi" class="form-label">Uçuş Numarası *</label>
+                            <input type="text" class="form-control" id="ucus_numarasi" 
+                                   name="ucus_numarasi" required placeholder="Örn: TK601">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="ucus_tarihi" class="form-label">Uçuş Tarihi *</label>
+                            <input type="date" class="form-control" id="ucus_tarihi" 
+                                   name="ucus_tarihi" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="kalkis_havalimani" class="form-label">Kalkış Havalimanı *</label>
+                            <select class="form-select" id="kalkis_havalimani" 
+                                    name="kalkis_havalimani" required>
+                                <option value="">Seçiniz...</option>
+                                {% for havalimani in havaalanlari %}
+                                <option value="{{ havalimani[0] }}">
+                                    {{ havalimani[1] }} - {{ havalimani[2] }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="varis_havalimani" class="form-label">Varış Havalimanı *</label>
+                            <select class="form-select" id="varis_havalimani" 
+                                    name="varis_havalimani" required>
+                                <option value="">Seçiniz...</option>
+                                {% for havalimani in havaalanlari %}
+                                <option value="{{ havalimani[0] }}">
+                                    {{ havalimani[1] }} - {{ havalimani[2] }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="kalkis_saati" class="form-label">Kalkış Saati *</label>
+                            <input type="time" class="form-control" id="kalkis_saati" 
+                                   name="kalkis_saati" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="varis_saati" class="form-label">Varış Saati *</label>
+                            <input type="time" class="form-control" id="varis_saati" 
+                                   name="varis_saati" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="ucak_id" class="form-label">Uçak *</label>
+                            <select class="form-select" id="ucak_id" name="ucak_id" required>
+                                <option value="">Seçiniz...</option>
+                                {% for ucak in ucaklar %}
+                                <option value="{{ ucak[0] }}">
+                                    {{ ucak[1] }} - {{ ucak[2] }} {{ ucak[3] }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="ucus_suresi" class="form-label">Uçuş Süresi (Dakika) *</label>
+                            <input type="number" class="form-control" id="ucus_suresi" 
+                                   name="ucus_suresi" required min="1" placeholder="90">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="fiyat" class="form-label">Bilet Fiyatı (₺) *</label>
+                            <input type="number" class="form-control" id="fiyat" 
+                                   name="fiyat" required min="0" step="0.01" placeholder="500.00">
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{{ url_for('ucuslar') }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> İptal
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Yeni Uçak Ekle - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-plane"></i> Yeni Uçak Ekle
+</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-plane"></i> Uçak Bilgileri
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('ucak_ekle') }}">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="kod_numarasi" class="form-label">Kod Numarası *</label>
+                            <input type="text" class="form-control" id="kod_numarasi" 
+                                   name="kod_numarasi" required placeholder="Örn: TC-JRY">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="durum" class="form-label">Durum *</label>
+                            <select class="form-select" id="durum" name="durum" required>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Bakimda">Bakımda</option>
+                                <option value="Onarımda">Onarımda</option>
+                                <option value="Devre Dışı">Devre Dışı</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="marka" class="form-label">Marka *</label>
+                            <input type="text" class="form-control" id="marka" 
+                                   name="marka" required placeholder="Örn: Airbus">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="model" class="form-label">Model *</label>
+                            <input type="text" class="form-control" id="model" 
+                                   name="model" required placeholder="Örn: A320">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="yolcu_kapasitesi" class="form-label">Yolcu Kapasitesi *</label>
+                            <input type="number" class="form-control" id="yolcu_kapasitesi" 
+                                   name="yolcu_kapasitesi" required min="1" placeholder="180">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="menzil" class="form-label">Menzil (KM) *</label>
+                            <input type="number" class="form-control" id="menzil" 
+                                   name="menzil" required min="1" placeholder="5700">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="uretim_yili" class="form-label">Üretim Yılı</label>
+                            <input type="number" class="form-control" id="uretim_yili" 
+                                   name="uretim_yili" min="1900" max="2030" placeholder="2020">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="son_bakim_tarihi" class="form-label">Son Bakım Tarihi</label>
+                        <input type="date" class="form-control" id="son_bakim_tarihi" 
+                               name="son_bakim_tarihi">
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{{ url_for('ucaklar') }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> İptal
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-save"></i> Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

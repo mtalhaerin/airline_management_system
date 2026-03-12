@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Sayfa - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-tachometer-alt"></i> Dashboard - Genel Bakış
+</h1>
+
+<!-- İstatistik Kartları -->
+<div class="row">
+    <div class="col-md-3">
+        <div class="stat-card blue position-relative">
+            <i class="fas fa-plane-departure"></i>
+            <div class="stat-label">Toplam Uçuş</div>
+            <div class="stat-number">{{ stats.toplam_ucus or 0 }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card green position-relative">
+            <i class="fas fa-users"></i>
+            <div class="stat-label">Toplam Yolcu</div>
+            <div class="stat-number">{{ stats.toplam_yolcu or 0 }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card orange position-relative">
+            <i class="fas fa-plane"></i>
+            <div class="stat-label">Aktif Uçak</div>
+            <div class="stat-number">{{ stats.aktif_ucak or 0 }}</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card red position-relative">
+            <i class="fas fa-calendar-day"></i>
+            <div class="stat-label">Bugünkü Uçuşlar</div>
+            <div class="stat-number">{{ stats.bugunun_ucuslari or 0 }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- Hızlı Erişim Butonları -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-rocket"></i> Hızlı İşlemler
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('ucus_ekle') }}" class="btn btn-primary w-100 py-3">
+                            <i class="fas fa-plus-circle fa-2x mb-2"></i>
+                            <br>Yeni Uçuş Ekle
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('rezervasyon_ekle') }}" class="btn btn-success w-100 py-3">
+                            <i class="fas fa-ticket-alt fa-2x mb-2"></i>
+                            <br>Rezervasyon Yap
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('yolcu_ekle') }}" class="btn btn-info w-100 py-3">
+                            <i class="fas fa-user-plus fa-2x mb-2"></i>
+                            <br>Yolcu Ekle
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('ucak_ekle') }}" class="btn btn-warning w-100 py-3">
+                            <i class="fas fa-plane fa-2x mb-2"></i>
+                            <br>Uçak Ekle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Son Uçuşlar -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-history"></i> Son Eklenen Uçuşlar
+            </div>
+            <div class="card-body">
+                {% if stats.son_ucuslar %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Uçuş No</th>
+                                <th>Tarih</th>
+                                <th>Kalkış</th>
+                                <th>Varış</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ucus in stats.son_ucuslar %}
+                            <tr>
+                                <td><strong>{{ ucus[0] }}</strong></td>
+                                <td>{{ ucus[1] }}</td>
+                                <td>{{ ucus[2] }}</td>
+                                <td>{{ ucus[3] }}</td>
+                                <td>
+                                    {% if ucus[4] == 'Planlandı' %}
+                                        <span class="badge bg-primary">{{ ucus[4] }}</span>
+                                    {% elif ucus[4] == 'Gerçekleşti' %}
+                                        <span class="badge bg-success">{{ ucus[4] }}</span>
+                                    {% elif ucus[4] == 'İptal' %}
+                                        <span class="badge bg-danger">{{ ucus[4] }}</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ ucus[4] }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-end mt-3">
+                    <a href="{{ url_for('ucuslar') }}" class="btn btn-primary">
+                        Tüm Uçuşları Gör <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                {% else %}
+                <div class="alert alert-info mb-0">
+                    <i class="fas fa-info-circle"></i> Henüz uçuş kaydı bulunmamaktadır.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sistem Bilgileri -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-info-circle"></i> Sistem Bilgileri
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><i class="fas fa-database"></i> Veritabanı:</span>
+                        <strong>MS SQL Server / HavayoluDB</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><i class="fas fa-table"></i> Toplam Tablo:</span>
+                        <strong>8 Tablo</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><i class="fas fa-ticket-alt"></i> Aktif Rezervasyon:</span>
+                        <strong>{{ stats.aktif_rezervasyon or 0 }}</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span><i class="fas fa-calendar"></i> Tarih:</span>
+                        <strong>{{ current_date }}</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-tasks"></i> Özellikler
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success"></i> Uçuş ve rezervasyon yönetimi
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success"></i> Yolcu bilgileri takibi
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success"></i> Uçak filosu yönetimi
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success"></i> Personel ve görev atamaları
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success"></i> Bakım kayıtları
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success"></i> Detaylı raporlama
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Sayfa yüklendiğinde tarih göster
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateElement = document.querySelector('.list-group-item:last-child strong');
+        if (dateElement && dateElement.textContent === '') {
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = today.toLocaleDateString('tr-TR', options);
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Yeni Rezervasyon - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-ticket-alt"></i> Yeni Rezervasyon Oluştur
+</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-ticket-alt"></i> Rezervasyon Bilgileri
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('rezervasyon_ekle') }}">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="yolcu_id" class="form-label">Yolcu *</label>
+                            <select class="form-select" id="yolcu_id" name="yolcu_id" required>
+                                <option value="">Seçiniz...</option>
+                                {% for yolcu in yolcular %}
+                                <option value="{{ yolcu[0] }}">
+                                    {{ yolcu[1] }} - {{ yolcu[2] }} {{ yolcu[3] }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="ucus_id" class="form-label">Uçuş *</label>
+                            <select class="form-select" id="ucus_id" name="ucus_id" required>
+                                <option value="">Seçiniz...</option>
+                                {% for ucus in ucuslar %}
+                                <option value="{{ ucus[0] }}">
+                                    {{ ucus[1] }} - {{ ucus[2] }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="koltuk_numarasi" class="form-label">Koltuk Numarası *</label>
+                            <input type="text" class="form-control" id="koltuk_numarasi" 
+                                   name="koltuk_numarasi" required placeholder="Örn: 12A">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="bilet_tipi" class="form-label">Bilet Sınıfı *</label>
+                            <select class="form-select" id="bilet_tipi" name="bilet_tipi" required>
+                                <option value="Ekonomi">Ekonomi</option>
+                                <option value="Business">Business</option>
+                                <option value="First Class">First Class</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="bilet_fiyati" class="form-label">Bilet Fiyatı (₺) *</label>
+                            <input type="number" class="form-control" id="bilet_fiyati" 
+                                   name="bilet_fiyati" required min="0" step="0.01" placeholder="500.00">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="odeme_yontemi" class="form-label">Ödeme Yöntemi *</label>
+                            <select class="form-select" id="odeme_yontemi" name="odeme_yontemi" required>
+                                <option value="">Seçiniz...</option>
+                                <option value="Kredi Kartı">Kredi Kartı</option>
+                                <option value="Nakit">Nakit</option>
+                                <option value="Havale">Havale</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="pnr_kodu" class="form-label">PNR Kodu *</label>
+                            <input type="text" class="form-control" id="pnr_kodu" 
+                                   name="pnr_kodu" required placeholder="Örn: ABC123">
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{{ url_for('rezervasyonlar') }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> İptal
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i> Rezervasyonu Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

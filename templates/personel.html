@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Personel - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-user-tie"></i> Personel Listesi
+</h1>
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-list"></i> Tüm Personel
+    </div>
+    <div class="card-body">
+        {% if personel %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Personel No</th>
+                        <th>Ad Soyad</th>
+                        <th>Pozisyon</th>
+                        <th>Telefon</th>
+                        <th>Email</th>
+                        <th>İşe Giriş</th>
+                        <th>Lisans No</th>
+                        <th>Lisans Geçerlilik</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in personel %}
+                    <tr>
+                        <td><strong>{{ p[1] }}</strong></td>
+                        <td>{{ p[2] }} {{ p[3] }}</td>
+                        <td>
+                            {% if p[4] == 'Pilot' %}
+                                <span class="badge bg-primary">{{ p[4] }}</span>
+                            {% elif p[4] == 'Yardımcı Pilot' %}
+                                <span class="badge bg-info">{{ p[4] }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ p[4] }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ p[6] }}</td>
+                        <td>{{ p[7] or '-' }}</td>
+                        <td>{{ p[9].strftime('%d.%m.%Y') if p[9] else '-' }}</td>
+                        <td>{{ p[11] or '-' }}</td>
+                        <td>{{ p[12].strftime('%d.%m.%Y') if p[12] else '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info mb-0">
+            <i class="fas fa-info-circle"></i> Henüz personel kaydı bulunmamaktadır.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

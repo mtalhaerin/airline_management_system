@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Bakım Kayıtları - Havayolu Yönetim Sistemi{% endblock %}
+
+{% block content %}
+<h1 class="page-title">
+    <i class="fas fa-tools"></i> Bakım Kayıtları
+</h1>
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-list"></i> Tüm Bakım Kayıtları
+    </div>
+    <div class="card-body">
+        {% if bakim_kayitlari %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Bakım ID</th>
+                        <th>Uçak Kodu</th>
+                        <th>Uçak Modeli</th>
+                        <th>Bakım Tipi</th>
+                        <th>Başlangıç</th>
+                        <th>Bitiş</th>
+                        <th>Maliyet</th>
+                        <th>Sorumlu</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bakim in bakim_kayitlari %}
+                    <tr>
+                        <td><strong>#{{ bakim[0] }}</strong></td>
+                        <td>{{ bakim[1] }}</td>
+                        <td>{{ bakim[2] }}</td>
+                        <td>{{ bakim[3] }}</td>
+                        <td>{{ bakim[4].strftime('%d.%m.%Y') if bakim[4] else '-' }}</td>
+                        <td>{{ bakim[5].strftime('%d.%m.%Y') if bakim[5] else '-' }}</td>
+                        <td>{{ "%.2f"|format(bakim[7]) if bakim[7] else '-' }} ₺</td>
+                        <td>{{ bakim[8] or '-' }}</td>
+                        <td>
+                            {% if bakim[9] == 'Tamamlandı' %}
+                                <span class="badge bg-success">{{ bakim[9] }}</span>
+                            {% elif bakim[9] == 'Devam Ediyor' %}
+                                <span class="badge bg-warning text-dark">{{ bakim[9] }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ bakim[9] }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info mb-0">
+            <i class="fas fa-info-circle"></i> Henüz bakım kaydı bulunmamaktadır.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
