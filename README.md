@@ -1,30 +1,3 @@
-# Havayolu Yönetim Sistemi
-
-Bu proje, bir havayolu firması için geliştirilmiş kapsamlı bir veritabanı yönetim sistemidir. Python Flask framework'ü kullanılarak geliştirilmiş olup, MS SQL Server veritabanı kullanmaktadır.
-
-## Proje Özellikleri
-
-### Veritabanı Yapısı (8 Tablo)
-1. **Havaalanlari** - Havalimanı bilgileri
-2. **Ucaklar** - Uçak filosu yönetimi
-3. **Ucuslar** - Uçuş planları ve bilgileri
-4. **Yolcular** - Yolcu kayıtları
-5. **Rezervasyonlar** - Bilet rezervasyonları (Yolcu-Uçuş ilişki tablosu)
-6. **Personel** - Pilot ve kabin görevlileri
-7. **BakimKayitlari** - Uçak bakım ve onarım kayıtları
-8. **UcusPersoneli** - Uçuş-Personel görev atamaları
-
-### Sistem Özellikleri
-- ✅ Uçuş yönetimi (Ekleme, listeleme, durum takibi)
-- ✅ Rezervasyon sistemi (Bilet rezervasyonu, PNR kodu)
-- ✅ Yolcu bilgileri yönetimi
-- ✅ Uçak filosu takibi
-- ✅ Personel yönetimi
-- ✅ Havalimanı bilgileri
-- ✅ Bakım kayıtları
-- ✅ Detaylı raporlama ve istatistikler
-- ✅ Modern ve kullanıcı dostu arayüz
-
 ## Kurulum
 
 ### Gereksinimler
@@ -86,68 +59,6 @@ python app.py
 
 Tarayıcınızda şu adresi açın: http://localhost:5000
 
-## Kullanım
-
-### Ana Sayfa (Dashboard)
-- Sistem istatistikleri
-- Hızlı erişim menüleri
-- Son uçuşlar listesi
-
-### Uçuşlar
-- Tüm uçuşları görüntüleme
-- Yeni uçuş ekleme
-- Uçuş detayları (kalkış, varış, havalimanları, uçak bilgileri)
-
-### Rezervasyonlar
-- Bilet rezervasyonu oluşturma
-- PNR kodu ile rezervasyon takibi
-- Koltuk ve sınıf seçimi
-- Ödeme yöntemi kaydı
-
-### Yolcular
-- Yolcu kayıt sistemi
-- Yolcu bilgileri (ad, soyad, iletişim bilgileri, TC kimlik)
-- Yolcu geçmişi
-
-### Uçaklar
-- Uçak filosu yönetimi
-- Uçak durumu (Aktif, Bakımda, Onarımda)
-- Kapasite ve menzil bilgileri
-
-### Personel
-- Pilot ve kabin görevlisi kayıtları
-- Lisans bilgileri
-- Görev atamaları
-
-### Havalimanları
-- Havalimanı bilgileri
-- Şehir ve ülke bazlı listeleme
-
-### Bakım Kayıtları
-- Uçak bakım geçmişi
-- Rutin bakım, onarım kayıtları
-- Maliyet takibi
-
-### Raporlar
-- En çok kullanılan havalimanları
-- En çok uçuş yapan uçaklar
-- Aylık gelir raporları
-- Rezervasyon istatistikleri
-
-## Veritabanı Diyagramı
-
-### İlişkiler
-- Ucuslar ➜ Havaalanlari (Kalkış ve Varış)
-- Ucuslar ➜ Ucaklar
-- Rezervasyonlar ➜ Yolcular
-- Rezervasyonlar ➜ Ucuslar
-- BakimKayitlari ➜ Ucaklar
-- BakimKayitlari ➜ Personel
-- UcusPersoneli ➜ Ucuslar
-- UcusPersoneli ➜ Personel
-
-## Teknolojiler
-
 ### Backend
 - Python 3.x
 - Flask 3.0.0
@@ -163,24 +74,6 @@ Tarayıcınızda şu adresi açın: http://localhost:5000
 - MS SQL Server
 - T-SQL
 - Views ve Stored Procedures
-
-## Güvenlik
-
-- SQL Injection koruması (Parametreli sorgular)
-- Form validasyonu
-- Session yönetimi
-
-## Örnek Veriler
-
-Veritabanı oluşturulurken aşağıdaki örnek veriler otomatik olarak eklenir:
-- 8 Havalimanı
-- 8 Uçak
-- 10 Yolcu
-- 10 Personel
-- 10 Uçuş
-- 12 Rezervasyon
-- 5 Bakım Kaydı
-- 13 Uçuş-Personel Ataması
 
 ## Sorun Giderme
 
@@ -211,7 +104,6 @@ Login failed for user
 
 Bu proje eğitim amaçlı geliştirilmiştir.
 
-## İletişim
 
 Proje ile ilgili sorularınız için lütfen iletişime geçin.
 
